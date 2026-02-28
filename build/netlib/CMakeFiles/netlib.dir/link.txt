@@ -1,0 +1,2 @@
+/usr/bin/ar qc libnetlib.a CMakeFiles/netlib.dir/src/netlib.c.o
+/usr/bin/ranlib libnetlib.a
