@@ -9,7 +9,7 @@
 int main() {
     
     int fd = createTCPIPv4Socket();
-    struct sockaddr_in address = createIPv4Address("142.250.188.46", 80);
+    struct sockaddr_in address = createIPv4Address("127.0.0.1", 2000);
     
     int result = connect(fd, (struct sockaddr*)&address, sizeof(address));
 

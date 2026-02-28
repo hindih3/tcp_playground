@@ -18,7 +18,7 @@ struct sockaddr_in createIPv4Address(const char* ip, int port) {
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
 
-    if(strlen(ip) == 0)
+    if (ip == NULL || ip[0] == '\0')
         address.sin_addr.s_addr = INADDR_ANY;
     else
         inet_pton(AF_INET, ip, &address.sin_addr);
