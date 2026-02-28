@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <string.h>
 
 int createTCPIPv4Socket(void) {
     int fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -16,7 +17,11 @@ struct sockaddr_in createIPv4Address(const char* ip, int port) {
 
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
-    inet_pton(AF_INET, ip, &address.sin_addr);
+
+    if(strlen(ip) == 0)
+        address.sin_addr.s_addr = INADDR_ANY;
+    else
+        inet_pton(AF_INET, ip, &address.sin_addr);
 
     return address;
 }

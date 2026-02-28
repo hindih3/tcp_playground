@@ -6,10 +6,6 @@
 
 #include "netlib.h"
 int main() {
-    int fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (fd < 0) {
-        perror("socket");
-        return 1;
-    }
-
+    int serverSocketFD = createTCPIPv4Socket();
+    struct sockaddr_in serverAddress = createIPv4Address("", 2000);
 }
