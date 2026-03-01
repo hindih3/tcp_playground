@@ -1,9 +1,3 @@
-#include <stdio.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string.h>
-
 #include "netlib.h"
 
 int main() {
@@ -17,7 +11,7 @@ int main() {
         close(serverSocketFD);
         return 1;
     }
-    printf("socket was bound successfully!\n");
+    printf("socket was bound successfully\n");
     if (listen(serverSocketFD, 10) < 0) {
         perror("listen");
         close(serverSocketFD);
@@ -26,18 +20,31 @@ int main() {
     
     struct sockaddr_in clientAddress;
     socklen_t clientLen = sizeof(clientAddress);
-
     int clientSocketFD = accept(serverSocketFD, (struct sockaddr*)&clientAddress, &clientLen);
     if (clientSocketFD < 0) {
         perror("socket");
         close(serverSocketFD);
         return 1;
     }
-    printf("Client connected!\n");
+    printf("Client connected\n");
+
     char buffer[1024];
-    recv(clientSocketFD, buffer, sizeof(buffer), 0);
-    printf("Response was %s\n", buffer);
-    
+    while (true) {
+        ssize_t recvAmount = recv(clientSocketFD, buffer, sizeof(buffer), 0);
+        if (recvAmount > 0) {
+            buffer[recvAmount] = '\0';
+            printf("%s", buffer);
+        }
+        else if (recvAmount == 0) {
+            printf("Client disconnected\n");
+            break;
+        }
+        else {
+            perror("recv");
+            break;
+        }
+    }
+    printf("File closed\n");
     close(clientSocketFD);
     close(serverSocketFD);
     return 0;

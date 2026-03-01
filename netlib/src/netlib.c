@@ -25,3 +25,14 @@ struct sockaddr_in createIPv4Address(const char* ip, int port) {
 
     return address;
 }
+
+struct acceptedSocket {
+    int socketFD;
+    struct sockaddr_in address;
+    int error;
+    bool success;
+};
+
+struct acceptedSocket* acceptConnection(int serverSocketFD) {
+
+}
