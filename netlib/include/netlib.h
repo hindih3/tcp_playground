@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sys/select.h>
 
 struct acceptedSocket;
 int createTCPIPv4Socket(void);
