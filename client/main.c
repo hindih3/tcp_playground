@@ -10,12 +10,19 @@ int main() {
         close(socketFD);
         return 1;
     }
+    printf("Connection was successful\n");
+    runClientLoop(socketFD);
 
-    printf("Connection was successful. Type \"exit\" on a separate line to terminate\n");
+    close(socketFD);
+    printf("File closed\n");
+    return 0;
+}
+
+void runClientLoop(int socketFD) {
+    printf("Type \"exit\" on a separate line to terminate\n");
 
     char* line = NULL;
     size_t lineSize = 0;
-
     while(true) {
         int maxFD = socketFD > STDIN_FILENO ? socketFD : STDIN_FILENO;
         fd_set readSet; //initialize set of file descriptors
@@ -68,7 +75,4 @@ int main() {
             }
         }
     }
-    close(socketFD);
-    printf("File closed\n");
-    return 0;
 }
