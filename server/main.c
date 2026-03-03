@@ -82,7 +82,9 @@ int main() {
     }
 
     for (int i = 0; i <= maxFD; i++) {
-        close(i);
+        if (FD_ISSET(i, &masterSet)) {
+            close(i);
+        }
     }
     printf("File closed\n");
     return 0;
