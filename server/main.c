@@ -57,7 +57,7 @@ int main() {
             }
         }
 
-        for (int i = 0; i <= maxFD; i++) {
+        for (int i = 0; i <= maxFD; ++i) {
             if (i != serverSocketFD && FD_ISSET(i, &readSet)) {
 
                 char buffer[1024];
@@ -66,6 +66,12 @@ int main() {
                 if (recvAmount > 0) {
                     buffer[recvAmount] = '\0';
                     printf("Client %d: %s", i, buffer);
+
+                    for (int j = 0; j <= maxFD; ++j) { //broadcasting to clients
+                        if (j != serverSocketFD && j != i && FD_ISSET(j, &masterSet)) {
+                            send(j, buffer, recvAmount, 0);
+                        }
+                    }
                 }
                 else if (recvAmount == 0) {
                     printf("Client %d disconnected\n", i);

@@ -1,5 +1,7 @@
 #include "netlib.h"
 
+void runClientLoop(int socketFD);
+
 int main() {
     
     int socketFD = createTCPIPv4Socket();
